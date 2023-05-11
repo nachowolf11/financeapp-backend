@@ -65,38 +65,32 @@ const loginUsuario = async(req, res = express.response) => {
     const { email, password } = req.body
 
     try {
-        // const [user] = await knex('users').select('*').where('email', email);
-        const user = {
-            nombre:'hola'
+        const [user] = await knex('users').select('*').where('email', email);
+
+        if( !user ){
+            return res.status(400).json({
+                ok: false,
+                msg: 'El usuario no existe con ese email'
+            });
         }
 
-        // if( !user ){
-        //     return res.status(400).json({
-        //         ok: false,
-        //         msg: 'El usuario no existe con ese email'
-        //     });
-        // }
+        const validPassword = bcrypt.compareSync( password, user.password );
+        if( !validPassword ){
+            return res.status(400).json({
+                ok: false,
+                msg: 'Password incorrecto'
+            });
+        }
 
-        // const validPassword = bcrypt.compareSync( password, user.password );
-        // if( !validPassword ){
-        //     return res.status(400).json({
-        //         ok: false,
-        //         msg: 'Password incorrecto'
-        //     });
-        // }
+        //Generar JWT
+        const token = await generarJWT( user.user_id, user.name );
 
-        // //Generar JWT
-        // const token = await generarJWT( user.user_id, user.name );
-
-        // res.status(200).json({
-        //     ok: true,
-        //     user_id: user.user_id,
-        //     name: user.name,
-        //     token
-        // });
         res.status(200).json({
-            user
-        })
+            ok: true,
+            user_id: user.user_id,
+            name: user.name,
+            token
+        });
 
     } catch (error) {
         console.log(error);
