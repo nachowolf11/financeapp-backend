@@ -20,6 +20,10 @@ app.use('/auth', require('./routes/auth'));
 app.use('/movements', require('./routes/movements'));
 app.use('/users', require('./routes/users'));
 
+app.get('*', ( req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+})
+
 //Escuchar peticions
 app.listen( process.env.PORT, () => {
     console.log(`Servidor corriendo en el puerto ${process.env.PORT}`);
