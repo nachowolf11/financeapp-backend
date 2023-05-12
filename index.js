@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 require('dotenv').config();
 const cors = require('cors');
 
@@ -8,8 +9,8 @@ const app = express();
 //CORS
 app.use(cors());
 
-//Directorio Publico
-app.use( express.static('public') )
+// //Directorio Publico
+app.use( express.static(path.join(__dirname,'public')) )
 
 //Lectura y parseo del body
 app.use( express.json() );
