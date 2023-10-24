@@ -86,16 +86,17 @@ const updateMovement = async( req, res = express.response ) => {
 
         const newMovement = { ...req.body, user_id: req.user_id }
 
-        if( movement.amount !== newMovement.amount || movement.account_movement_type_id !== newMovement.account_movement_type_id ){
-            return res.status(404).json({
-                ok: false,
-                msg:'Movement amount can not be changed. In this case, delete the movement and create it again.'
-            });  
-        }
-
-
         // Actualizando el movimiento
         await knex('account_movement').where('account_movement_id', movement_id).update(newMovement);
+
+        // Actualizar Balance de la cuenta
+        const [{balance}] = await knex.select('balance').from('account').where('user_id', user_id);
+
+        const movementAmount = movement.account_movement_type === 1 ? movement.amount : -1*movement.amount;
+        const newMovementAmount = newMovement.account_movement_type === 1 ? newMovement.amount : -1*newMovement.amount;
+        
+        const newBalance = balance - movementAmount + newMovementAmount;
+        await knex('account').where('user_id', user_id).update({balance:newBalance})
 
         res.status(201).json({
             ok: true,

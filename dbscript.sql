@@ -8,19 +8,19 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema financeapp
+-- Schema bw7vwxpgwvpaxbps2beu
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema financeapp
+-- Schema bw7vwxpgwvpaxbps2beu
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `financeapp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `financeapp` ;
+CREATE SCHEMA IF NOT EXISTS `bw7vwxpgwvpaxbps2beu` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `bw7vwxpgwvpaxbps2beu` ;
 
 -- -----------------------------------------------------
--- Table `financeapp`.`users`
+-- Table `bw7vwxpgwvpaxbps2beu`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `financeapp`.`users` (
+CREATE TABLE IF NOT EXISTS `bw7vwxpgwvpaxbps2beu`.`users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
@@ -37,9 +37,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `financeapp`.`account`
+-- Table `bw7vwxpgwvpaxbps2beu`.`account`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `financeapp`.`account` (
+CREATE TABLE IF NOT EXISTS `bw7vwxpgwvpaxbps2beu`.`account` (
   `account_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `balance` INT NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `financeapp`.`account` (
   UNIQUE INDEX `user_id` (`user_id` ASC) VISIBLE,
   CONSTRAINT `account_ibfk_1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `financeapp`.`users` (`user_id`))
+    REFERENCES `bw7vwxpgwvpaxbps2beu`.`users` (`user_id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
@@ -56,9 +56,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `financeapp`.`categories`
+-- Table `bw7vwxpgwvpaxbps2beu`.`categories`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `financeapp`.`categories` (
+CREATE TABLE IF NOT EXISTS `bw7vwxpgwvpaxbps2beu`.`categories` (
   `category_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`category_id`),
@@ -71,9 +71,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `financeapp`.`account_movement_type`
+-- Table `bw7vwxpgwvpaxbps2beu`.`account_movement_type`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `financeapp`.`account_movement_type` (
+CREATE TABLE IF NOT EXISTS `bw7vwxpgwvpaxbps2beu`.`account_movement_type` (
   `account_movement_type_id` INT NOT NULL AUTO_INCREMENT,
   `account_movement_name` VARCHAR(25) NOT NULL,
   PRIMARY KEY (`account_movement_type_id`))
@@ -84,9 +84,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `financeapp`.`account_movement`
+-- Table `bw7vwxpgwvpaxbps2beu`.`account_movement`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `financeapp`.`account_movement` (
+CREATE TABLE IF NOT EXISTS `bw7vwxpgwvpaxbps2beu`.`account_movement` (
   `account_movement_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `description` VARCHAR(100) NOT NULL,
@@ -101,13 +101,13 @@ CREATE TABLE IF NOT EXISTS `financeapp`.`account_movement` (
   INDEX `account_movement_ibfk_1` (`user_id` ASC) VISIBLE,
   CONSTRAINT `account_movement_ibfk_1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `financeapp`.`users` (`user_id`),
+    REFERENCES `bw7vwxpgwvpaxbps2beu`.`users` (`user_id`),
   CONSTRAINT `account_movement_ibfk_2`
     FOREIGN KEY (`category_id`)
-    REFERENCES `financeapp`.`categories` (`category_id`),
+    REFERENCES `bw7vwxpgwvpaxbps2beu`.`categories` (`category_id`),
   CONSTRAINT `account_movement_ibfk_3`
     FOREIGN KEY (`account_movement_type_id`)
-    REFERENCES `financeapp`.`account_movement_type` (`account_movement_type_id`))
+    REFERENCES `bw7vwxpgwvpaxbps2beu`.`account_movement_type` (`account_movement_type_id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 80
 DEFAULT CHARACTER SET = utf8mb4
