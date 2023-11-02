@@ -15,11 +15,7 @@ const getMyUser = async( req, res = express.response ) => {
 
        res.status(200).json({
         ok: true,
-        user_id: user.user_id,
-        name: user.name,
-        email:user.email,
-        birthday: user.birthday,
-        cellphone: user.cellphone
+        user
     })
     } catch (error) {
         console.log(error);
@@ -39,20 +35,15 @@ const updateUser = async( req, res = express.response ) => {
             msg: 'User does not exist.'
             })
         }
-        user = {
-            name: req.body.name,
-            email:req.body.email,
-            birthday: moment(req.body.birthday).utc().format('YYYY-MM-DD'),
-            cellphone: req.body.cellphone
-        }
+
+        user = {...user, ...req.body}
+
+        req.body.birthday ? user.birthday = moment(req.body.birthday).utc().format('YYYY-MM-DD') : '';
+
        await knex('users').where('user_id', req.user_id).update(user);
-        console.log(user);
        res.status(201).json({
         ok: true,
-        name: user.name,
-        email:user.email,
-        birthday: user.birthday,
-        cellphone: user.cellphone
+        user
        });
 
     } catch (error) {

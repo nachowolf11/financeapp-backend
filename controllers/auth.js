@@ -47,8 +47,7 @@ const crearUsuario = async(req, res = express.response) => {
     
         res.status(201).json({
             ok: true,
-            user_id: user.user_id,
-            name: user.name,
+            user,
             token
         })
     } catch (error) {
@@ -87,8 +86,7 @@ const loginUsuario = async(req, res = express.response) => {
 
         res.status(200).json({
             ok: true,
-            user_id: user.user_id,
-            name: user.name,
+            user,
             token
         });
 
